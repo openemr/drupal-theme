@@ -1,0 +1,89 @@
+<?php
+/**
+ * @file
+ * Functions to support theming in the theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\media\Entity\Media;
+use Drupal\file\Entity\File;
+use Drupal\node\Entity\Node;
+
+function openemr_form_system_theme_settings_alter(&$form, FormStateInterface &$form_state, $form_id = NULL) {
+  // Work-around for a core bug affecting admin themes. See issue #943212.
+  if (isset($form_id)) {
+    return;
+  }
+
+  $form['openemr_cover_image_field'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Blog Cover Image Field Name'),
+    '#default_value' => theme_get_setting('openemr_cover_image_field'),
+    '#description'   => t("Machine name for blog posts."),
+  );
+}
+
+function openemr_theme_suggestions_block_alter(array &$suggestions, array $vars) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $last = end($suggestions);
+    reset($suggestions);
+    $suggestion = $last . '_' . $node->bundle();
+    $suggestions[] = $suggestion;
+  }
+}
+
+function openemr_preprocess_block(array &$vars) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    if ($node->getType() == 'blog_post') {
+      $vars['background'] = openemr_create_uri_for_background_image($node);
+    }
+  }
+}
+
+function openemr_preprocess_node(&$variables) {
+  $variables['openemr_cover_image_field'] = theme_get_setting('openemr_cover_image_field');
+}
+
+function openemr_preprocess_page(&$vars) {
+  $fullWidthContentTypes = [
+    'blog_post',
+  ];
+
+  $vars['container'] = 'container';
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    if (in_array($node->getType(), $fullWidthContentTypes)) {
+      $vars['container'] = 'container-fluid';
+    }
+  }
+}
+
+function openemr_theme_suggestions_page_alter(&$suggestions, $vars, $hook) {
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $content_type = $node->bundle();
+    $suggestions[] = 'page__' . $content_type;
+  }
+}
+
+function openemr_create_uri_for_background_image(Node $node) {
+  $image_field = theme_get_setting('openemr_cover_image_field');
+  if ($image = $node->get($image_field)->first()->getValue()) {
+    $media = Media::load($image['target_id']);
+    $media_field = $media->get('image')->first()->getValue();
+    $file = File::load($media_field['target_id']);
+    if ($file) {
+      $background = $file->getFileUri();
+      return file_create_url($background);
+    }
+  }
+}
+
+function openemr_preprocess_paragraph__banner(&$variables) {
+  $paragraph = $variables['paragraph'];
+  if (!$paragraph->field_image->isEmpty()) {
+    $image = $paragraph->field_image->entity->url();
+    $variables['attributes']['style'][] = 'background-image: url("' . $image . '");';
+    $variables['attributes']['style'][] = 'background-size: cover;';
+    $variables['attributes']['style'][] = 'background-position: center center;';
+  }
+}

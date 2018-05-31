@@ -1,0 +1,20 @@
+core: 8.x
+type: theme
+base theme: bootstrap
+
+name: 'OpenEMR'
+description: 'Custom Bootstrap Drupal theme for OpenEMR'
+package: 'Bootstrap'
+
+regions:
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  highlighted: 'Highlighted'
+  content: 'Content'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+libraries-extend:
+  bootstrap/framework:
+    - openemr/framework

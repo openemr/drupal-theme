@@ -1,0 +1,42 @@
+// Default variables.
+@import "default-variables";
+
+// Bootstrap Framework.
+@import '../bootstrap/assets/stylesheets/bootstrap';
+
+// Base-theme overrides.
+@import 'overrides';
+@import 'menu';
+@import 'headings';
+@import 'blog';
+@import 'block';
+
+body {
+  margin-top: 0;
+}
+
+header.system {
+  @extend .container-fluid;
+  margin-bottom: 0;
+  background-color: rgba($brand-primary, 0.9);
+  padding: 0.5rem 1rem;
+  border: none;
+
+  .navbar-default {
+    background-color: transparent;
+    padding: 1rem;
+
+    .navbar-header > a.logo > img {
+      height: 38px;
+    }
+  }
+}
+
+.main-container {
+  padding-top: 104px;
+}
+
+.kint {
+  margin-top: 106px !important;
+}
+

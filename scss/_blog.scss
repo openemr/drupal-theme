@@ -1,0 +1,26 @@
+.blog {
+  .cover {
+    @extend .text-center;
+    height: 525px;
+    position: relative;
+    background-position: 50% 50%;
+    background-size: cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1.page-header {
+      color: $white;
+      display: inline-block;
+      border: none;
+      background-color: rgba(darken($brand-primary, 25), 0.75);
+      padding: 1.25em 1.25em;
+
+      &::after {
+        content: none;
+      }
+    }
+  }
+}
+

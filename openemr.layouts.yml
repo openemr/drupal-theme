@@ -1,0 +1,76 @@
+openemr_full_width_one_column:
+  label: One column
+  category: Full Width
+  template: layouts/openemr-1-col-full
+  regions:
+    main:
+      label: Main content
+openemr_full_width_two_column:
+  label: Two column
+  category: Full Width
+  template: layouts/openemr-2-col-full
+  regions:
+    left:
+      label: Left
+    right:
+      label: Right
+openemr_full_width_three_column:
+  label: Three column
+  category: Full Width
+  template: layouts/openemr-3-col-full
+  regions:
+    left:
+      label: Left
+    center:
+      label: Center
+    right:
+      label: Right
+openemr_container_one_column:
+  label: 1 Column
+  category: Container
+  template: layouts/openemr-1-col-container
+  regions:
+    main:
+      label: Main content
+openemr_container_two_column:
+  label: 2 Column
+  category: Container
+  template: layouts/openemr-2-col-container
+  regions:
+    left:
+      label: Left
+    right:
+      label: Right
+openemr_container_three_column:
+  label: 3 Column
+  category: Container
+  template: layouts/openemr-3-col-container
+  regions:
+    left:
+      label: Left
+    center:
+      label: Center
+    right:
+      label: Right
+openemr_custom_blog:
+  label: Blog Post
+  category: OpenEMR Custom
+  template: layouts/openemr-blog-post
+  regions:
+    hero:
+      label: Hero
+    meta:
+      label: Meta Information
+    main:
+      label: Main Content
+openemr_custom_docs:
+  label: Documentation Page
+  category: OpenEMR Custom
+  template: layouts/openemr-docs
+  regions:
+    top:
+      label: Top
+    main:
+      label: Main Content
+    right:
+      label: Right Sidebar
